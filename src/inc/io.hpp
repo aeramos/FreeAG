@@ -16,15 +16,17 @@
  */
 
 
-/*  The IO namespace contains functions for input and output. All input and
+/*  The io namespace contains functions for input and output. All input and
  *  output for the program must go through these functions
  */
 
-#include "inc/IO.hpp"
-#include <cstring>    // For std::strlen
+#ifndef IO_HPP // for inclusion guard
+#define IO_HPP
 
-namespace IO {
-    void printCenter(WINDOW *winName, char message[]) {
-        mvprintw(getmaxy(winName) / 2, (getmaxx(winName) - std::strlen(message)) / 2, "%s", message);
-    }
+#include <ncurses.h>
+
+namespace io {
+    void printCenter(WINDOW *winName, char message[]);
 }
+
+#endif // inclusion guard
