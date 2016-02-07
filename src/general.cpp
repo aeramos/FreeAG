@@ -34,9 +34,9 @@ namespace general {
             return overflowSubtact(num, modifier, minNum, maxNum);
 
         // Check for integer overflows
-        } else if (num + modifier < num || num + modifier < modifier
+        } else if (num + modifier < num
             // Check if it goes over the max number
-                                        || num + modifier > maxNum) {
+                || num + modifier > maxNum) {
             // It overflowed, so make it the max possible number that doesn't
             // overflow
             return maxNum;
@@ -45,7 +45,6 @@ namespace general {
             return (num + modifier);
         }
     }
-
     unsigned long int overflowAdd(const unsigned long int& num,
                                   const unsigned long int& modifier,
                                   const unsigned long int& minNum,
@@ -58,9 +57,9 @@ namespace general {
             return overflowSubtact(num, modifier, minNum, maxNum);
 
         // Check for integer overflows
-        } else if (num + modifier < num || num + modifier < modifier
+        } else if (num + modifier < num
             // Check if it goes over the max number
-                                        || num + modifier > maxNum) {
+                || num + modifier > maxNum) {
             // It overflowed, so make it the max possible number that doesn't
             // overflow
             return maxNum;
@@ -74,11 +73,49 @@ namespace general {
     signed long int overflowSubtract(const signed long int& num,
                                      const signed long int& modifier,
                                      const signed long int& minNum,
-                                     const signed long int& maxNum);
+                                     const signed long int& maxNum) {
+
+        // If they gave a negative modifier, then it is like
+        // 3 - (-3) = 6. It is the same as 3 + 3 = 6, so send it to the
+        // addition function
+        if (modifier > 0) {
+            return overflowAdd(num, modifier, minNum, maxNum);
+
+        // Check for integer overflows
+        } else if (num - modifier > num
+            // Check if it goes under the min number
+                || num - modifier < minNum) {
+            // It overflowed, so make it the min possible number that doesn't
+            // overflow
+            return minNum;
+        } else {
+            // It won't overflow, so it is safe to perform the operation
+            return (num + modifier);
+        }
+    }
     unsigned long int overflowSubtract(const unsigned long int& num,
-                                      const signed long int& modifier,
-                                      const unsigned long int& minNum,
-                                      const unsigned long int& maxNum);
+                                       const signed long int& modifier,
+                                       const unsigned long int& minNum,
+                                       const unsigned long int& maxNum) {
+
+        // If they gave a negative modifier, then it is like
+        // 3 - (-3) = 6. It is the same as 3 + 3 = 6, so send it to the
+        // addition function
+        if (modifier > 0) {
+            return overflowAdd(num, modifier, minNum, maxNum);
+
+        // Check for integer overflows
+        } else if (num - modifier > num
+            // Check if it goes under the min number
+                || num - modifier < minNum) {
+            // It overflowed, so make it the min possible number that doesn't
+            // overflow
+            return minNum;
+        } else {
+            // It won't overflow, so it is safe to perform the operation
+            return (num + modifier);
+        }
+    }
 
     // Multiplication
     signed long int overflowMultiply(const signed long int& num,
