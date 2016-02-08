@@ -121,11 +121,54 @@ namespace general {
     signed long int overflowMultiply(const signed long int& num,
                                      const signed long int& modifier,
                                      const signed long int& minNum,
-                                     const signed long int& maxNum);
+                                     const signed long int& maxNum) {
+
+        // Check for integer overflows
+        if (num * modifier < num || num * modifier < modifier
+                                 || num * modifier > maxNum) {
+
+            // If the end result is going to be greater than num and modifier
+            if ((num > 0 && modifier > 0) || (num < 0 && modifier < 0)) {
+
+                // It overflowed, so make it the max possible number that
+                // doesn't overflow
+                return maxNum;
+            } else {
+                // It had an overflow because one number was negative and it
+                // went under the bound, so make it the min possible number
+                // that doesn't do this
+                return minNum;
+            }
+
+        // If num or modifier <= 0, then the answer can be less than minNum
+        } else if (num * modifier < minNum) {
+            return minNum;
+        } else {
+            // It won't overflow, so give the final answer
+            return (num * modifier);
+        }
+    }
     unsigned long int overflowMultiply(const unsigned long int& num,
                                        const unsigned long int& modifier,
                                        const unsigned long int& minNum,
-                                       const unsigned long int& maxNum);
+                                       const unsigned long int& maxNum) {
+
+        // Check for integer overflows
+        if (num * modifier < num || num * modifier < modifier
+                                 || num * modifier > maxNum) {
+
+            // It overflowed, so make it the max possible number that
+            // doesn't overflow
+            return maxNum;
+
+        // If num or modifier = 0, then the answer can be less than minNum
+        } else if (num * modifier < minNum) {
+            return minNum;
+        } else {
+            // It won't overflow, so give the final answer
+            return (num * modifier);
+        }
+    }
 
     // Division
     signed long int overflowDivide(const signed long int& num,
