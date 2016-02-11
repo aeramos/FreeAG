@@ -160,9 +160,35 @@ namespace general {
     signed long int overflowDivide(const signed long int& num,
                                    const signed long int& modifier,
                                    const signed long int& minNum,
-                                   const signed long int& maxNum);
+                                   const signed long int& maxNum) {
+        if (modifier == 0) {
+            // To prevent divide by zero error, do nothing to the number
+            // and return the number given.
+            return num;
+
+        // If the number becomes too small, make it the minNum
+        } else if (num / modifier < minNum) {
+            return minNum;
+        } else {
+            // It won't overflow, so it is safe to perform the operation
+            return (num / modifier);
+        }
+    }
     unsigned long int overflowDivide(const unsigned long int& num,
                                      const unsigned long int& modifier,
                                      const unsigned long int& minNum,
-                                     const unsigned long int& maxNum);
+                                     const unsigned long int& maxNum) {
+        if (modifier == 0) {
+            // To prevent divide by zero error, do nothing to the number
+            // and return the number given.
+            return num;
+
+        // If the number becomes too small, make it the minNum
+        } else if (num / modifier < minNum) {
+            return minNum;
+        } else {
+            // It won't overflow, so it is safe to perform the operation
+            return (num / modifier);
+        }
+    }
 }
