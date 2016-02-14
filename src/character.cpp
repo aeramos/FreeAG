@@ -82,7 +82,7 @@ void character::addHealth(const unsigned int& inputHealth) {
 }
 
 void character::subtractHealth(const unsigned int& inputHealth) {
-    health = general::overflowSUbtract(health, inputHealth, 0, maxHealth);
+    health = general::overflowSubtract(health, inputHealth, 0, maxHealth);
 }
 unsigned int character::getHealth() {
     return health;
@@ -103,7 +103,8 @@ void character::setMaxHealth() {
 void character::setMaxXP() {
     maxXP = level * 10;
 }
-void character::changeLevel(unsigned long int currentLevel) {
+void character::changeLevel() {
+    unsigned long int currentLevel = level;
     if (xp == maxXP) {
         level++;
     }
