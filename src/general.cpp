@@ -20,6 +20,9 @@
  *  and other functions
  */
 
+#include "inc/general.hpp"
+#include <cstdlib> // for abs
+
 namespace general {
     // Addition functions to stop overflow
     signed long int overflowAdd(const signed long int& num,
@@ -31,7 +34,7 @@ namespace general {
         // 3 + (-3) = 0. It is just like 3 - 3 = 0, so send it to the
         // subtraction function
         if (modifier < 0) {
-            return overflowSubtact(num, modifier, minNum, maxNum);
+            return overflowSubtract(num, abs(modifier), minNum, maxNum);
 
         // Check for integer overflows
         } else if (num + modifier < num
@@ -51,9 +54,9 @@ namespace general {
                                   const unsigned long int& maxNum) {
 
         // Check for integer overflows
-        } if (num + modifier < num
+        if (num + modifier < num
             // Check if it goes over the max number
-           || num + modifier > maxNum) {
+         || num + modifier > maxNum) {
             // It overflowed, so make it the max possible number that doesn't
             // overflow
             return maxNum;
@@ -72,8 +75,8 @@ namespace general {
         // If they gave a negative modifier, then it is like
         // 3 - (-3) = 6. It is the same as 3 + 3 = 6, so send it to the
         // addition function
-        if (modifier > 0) {
-            return overflowAdd(num, modifier, minNum, maxNum);
+        if (modifier < 0) {
+            return overflowAdd(num, abs(modifier), minNum, maxNum);
 
         // Check for integer overflows
         } else if (num - modifier > num
@@ -84,7 +87,7 @@ namespace general {
             return minNum;
         } else {
             // It won't overflow, so it is safe to perform the operation
-            return (num + modifier);
+            return (num - modifier);
         }
     }
     unsigned long int overflowSubtract(const unsigned long int& num,
@@ -99,7 +102,7 @@ namespace general {
             return minNum;
         } else {
             // It won't overflow, so it is safe to perform the operation
-            return (num + modifier);
+            return (num - modifier);
         }
     }
 
