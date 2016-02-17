@@ -22,11 +22,11 @@
 #ifndef CHARACTER_HPP // for inclusion guard
 #define CHARACTER_HPP
 
-#include <cstring>
+#include <string>
 
 class character {
     public:
-        void character(const std::string& inputName,
+        character(const std::string& inputName,
                        const unsigned int& inputLevel,
                        const unsigned int& inputXP);
 

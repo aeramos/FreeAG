@@ -25,7 +25,7 @@
 #include <climits> // for using overflow functions (general namespace)
 
 // public functions
-void character::character(const std::string& inputName,
+character::character(const std::string& inputName,
                const unsigned int& inputLevel,
                const unsigned int& inputXP) {
     name = inputName;
@@ -47,7 +47,7 @@ void character::setLevel(const unsigned int& inputLevel) {
 }
 void character::addLevel(const unsigned int& inputLevel) {
     level =  general::overflowAdd(level, inputLevel, 0,
-                            std::numeric_limits<unsigned long int>::min());
+        (unsigned long int)std::numeric_limits<unsigned long int>::min());
     changeLevel();
 }
 unsigned int character::getLevel() {
@@ -63,7 +63,7 @@ void character::setXP(const unsigned int& inputXP) {
     changeLevel();
 }
 void character::addXP(const unsigned int& inputXP) {
-    xp = general::overflowAdd(xp, inputXP, 0, maxXP);
+    xp = general::overflowAdd((unsigned long int)xp, inputXP, 0, maxXP);
     changeLevel();
 }
 unsigned int character::getXP() {
@@ -78,11 +78,13 @@ void character::setHealth(const unsigned int& inputHealth) {
     }
 }
 void character::addHealth(const unsigned int& inputHealth) {
-    health = general::overflowAdd(health, inputHealth, 0, maxHealth);
+    health = general::overflowAdd((unsigned long int)health,
+                                  inputHealth, 0, maxHealth);
 }
 
 void character::subtractHealth(const unsigned int& inputHealth) {
-    health = general::overflowSubtract(health, inputHealth, 0, maxHealth);
+    health = general::overflowSubtract((unsigned long int)health,
+                                       inputHealth, 0, maxHealth);
 }
 unsigned int character::getHealth() {
     return health;
