@@ -26,9 +26,15 @@
 void overflowAddTest();
 
 int main() {
+    bool hasRunBefore = false;
     unsigned short int selection;
     std::cout << "Tests for general namespace" << '\n' << std::endl;
     while (true) {
+        if (hasRunBefore) {
+            std::cout << "\n\n";  // user friendly spacing
+        } else {
+            hasRunBefore = true;
+        }
         std::cout << "Select a function to test" << '\n';
         std::cout << "(0) - End program" << '\n';
         std::cout << "(1) - overflowAdd" << '\n';
@@ -57,8 +63,8 @@ int main() {
 void overflowAddTest() {
     std::cout << "signed char num = 100" << '\n';
     std::cout << "signed char modifier = 100" << '\n';
-    std::cout << "minNum and maxNum = the min and max numbers for signed ints"
-              << std::endl;
+    std::cout << "minNum and maxNum = the min and max numbers "
+              << "for signed chars" << std::endl;
     std::cout << "Result (should be 127 (the operation will overflow, "
               << "so make it equal to maxNum)): "
               << general::overflowAdd(100, 200,
@@ -66,11 +72,11 @@ void overflowAddTest() {
                  (signed long int)std::numeric_limits<signed char>::max())
               << std::endl;
     std::cout << "Press enter to continue with the tests" << std::endl;
-    std::cin.get();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     std::cout << "signed char num = 50" << '\n';
     std::cout << "signed char modifier = 75" << '\n';
-    std::cout << "signed char minNum = min for signed ints" << '\n';
+    std::cout << "signed char minNum = min for signed chars" << '\n';
     std::cout << "maxNum = 100" << '\n';
     std::cout << "Result (should be 100 (goes over maxNum, "
               << "so make it equal to maxNum)): "
@@ -79,29 +85,29 @@ void overflowAddTest() {
                  (signed long int)100)
               << std::endl;
     std::cout << "Press enter to continue with the tests" << std::endl;
-    std::cin.get();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     std::cout << "signed char num = -100" << '\n';
     std::cout << "signed char modifier = -100" << '\n';
-    std::cout << "signed char minNum = min for signed ints" << '\n';
-    std::cout << "signed char maxNum = max for signed ints" << '\n';
+    std::cout << "signed char minNum = min for signed chars" << '\n';
+    std::cout << "signed char maxNum = max for signed chars" << '\n';
     std::cout << "Result (underflows) (should be -128): "
               << general::overflowAdd(-100, -100,
                  (signed long int)std::numeric_limits<signed char>::min(),
                  (signed long int)std::numeric_limits<signed char>::max())
               << std::endl;
     std::cout << "Press enter to continue with the tests" << std::endl;
-    std::cin.get();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     std::cout << "signed char num = 50" << '\n';
     std::cout << "signed char modifier = -100" << '\n';
     std::cout << "signed char minNum = 0" << '\n';
-    std::cout << "signed char maxNUm = max for signed ints" << '\n';
+    std::cout << "signed char maxNum = max for signed chars" << '\n';
     std::cout << "Result (goes under minNum) (should be 0): " << std::flush;
     std::cout << general::overflowAdd(50, -100, 0,
                  (signed long int)std::numeric_limits<signed char>::max())
               << std::endl;
     std::cout << '\n' << "Press enter to select another function to test"
               << std::endl;
-    std::cin.get();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
