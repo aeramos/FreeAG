@@ -78,7 +78,22 @@ public class Character {
         return inventory.get(i);
     }
 
+    public ItemStack getItem(ItemStack.ItemType type) {
+        for (ItemStack itemStack : inventory) {
+            if (itemStack.getType() == type) {
+                return itemStack;
+            }
+        }
+        return null;
+    }
+
     public boolean addItem(ItemStack itemStack) {
+        for (ItemStack stack : inventory) {
+            if (stack.getType() == itemStack.getType()) {
+                stack.changeAmount(itemStack.getAmount());
+                return true;
+            }
+        }
         if (inventory.size() < inventorySize) {
             inventory.add(itemStack);
             return true;

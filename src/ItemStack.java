@@ -25,6 +25,7 @@ public class ItemStack {
         COIN(1), APPLE(10);
 
         private final int value;
+
         ItemType(int value) {
             this.value = value;
         }
@@ -32,7 +33,6 @@ public class ItemStack {
         public int getValue() {
             return value;
         }
-
     }
 
     public ItemStack(ItemType type, String name, int amount) {
@@ -63,5 +63,14 @@ public class ItemStack {
 
     public void changeAmount(int amount) {
         this.amount += amount;
+    }
+
+    public ItemStack getItems(int amount) {
+        if (this.amount >= amount) {
+            this.amount -= amount;
+            return new ItemStack(this.type, this.name, amount);
+        } else {
+            return null;
+        }
     }
 }
