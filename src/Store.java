@@ -18,10 +18,11 @@
 
 public class Store {
     private String name;
-    private Item[] items;
+    private ItemStack[] itemStacks;
 
-    public Store(String name, Item[] items) {
+    public Store(String name, ItemStack[] itemStacks) {
         this.name = name;
+        this.itemStacks = itemStacks;
     }
 
     public String getName() {
@@ -32,11 +33,11 @@ public class Store {
         this.name = name;
     }
 
-    public Item[] getItems() {
-        return items;
+    public ItemStack[] getItemStacks() {
+        return itemStacks;
     }
 
-    public void setItems(Item[] items) {
-        this.items = items;
+    public void setItemStacks(ItemStack[] itemStacks) {
+        this.itemStacks = itemStacks;
     }
 }

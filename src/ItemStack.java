@@ -16,22 +16,37 @@
  * along with FreeAG.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-public class Item {
-    // will add more properties as needed and as the game expands
-    private int id;
+public class ItemStack {
+    private ItemType type;
     private String name;
+    private int amount;
 
-    public Item(int id, String name) {
-        this.id = id;
+    public enum ItemType {
+        COIN(1), APPLE(10);
+
+        private final int value;
+        ItemType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+    }
+
+    public ItemStack(ItemType type, String name, int amount) {
+        this.type = type;
         this.name = name;
+        this.amount = amount;
     }
 
-    public int getId() {
-        return id;
+    public ItemType getType() {
+        return type;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setType(ItemType type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -40,5 +55,13 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void changeAmount(int amount) {
+        this.amount += amount;
     }
 }
