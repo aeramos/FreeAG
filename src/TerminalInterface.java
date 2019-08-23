@@ -94,4 +94,10 @@ public class TerminalInterface {
             }
         }
     }
+
+    public static void printItems(Inventory inventory) {
+        for (int i = 0; i < inventory.size(); i++) {
+            System.out.println(inventory.get(i).getAmount() + " " + inventory.get(i).getItem().getName());
+        }
+    }
 }
