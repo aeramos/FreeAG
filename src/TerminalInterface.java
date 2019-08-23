@@ -19,21 +19,20 @@
 import java.util.Scanner;
 
 public class TerminalInterface {
-    public static void store(Store store, Character character) {
+    public static void store(Store store, Player player) {
         Scanner scanner = new Scanner(System.in);
         String input;
         boolean badInput;
         boolean shopping = true;
-        ItemStack[] stock = store.getItemStacks();
 
-        System.out.println("Hello " + character.getName() + ", welcome to " + store.getName());
+        System.out.println("Hello " + player.getName() + ", welcome to " + store.getName());
         while (shopping) {
             int selection = -1;
             badInput = true;
             while (badInput) {
                 System.out.println("We are currently selling: ");
-                for (int i = 0; i < stock.length; i++) {
-                    System.out.println("(" + (i + 1) + ") " + stock[i].getAmount() + " " + stock[i].getName() + " - " + stock[i].getType().getValue() + " coins each");
+                for (int i = 0; i < store.size(); i++) {
+                    System.out.println("(" + (i + 1) + ") " + store.get(i).getAmount() + " " + store.get(i).getItem().getName() + " - " + store.get(i).getItem().getValue() + " coins each");
                 }
 
                 System.out.println("What would you like to buy?");
@@ -43,7 +42,7 @@ public class TerminalInterface {
                 } catch (NumberFormatException ignored) {
                 }
 
-                if (selection >= 0 && selection < stock.length) {
+                if (selection >= 0 && selection < store.size()) {
                     badInput = false;
                 } else {
                     System.out.println("Bad input.\n");
@@ -53,7 +52,7 @@ public class TerminalInterface {
             badInput = true;
             int amount = -1;
             while (badInput) {
-                System.out.println("How many " + stock[selection].getName() + " would you like? We have " + stock[selection].getAmount() + " in stock.");
+                System.out.println("How many " + store.get(selection).getItem().getName() + " would you like? We have " + store.get(selection).getAmount() + " in stock.");
                 input = scanner.nextLine();
                 try {
                     amount = Integer.parseInt(input);
@@ -62,23 +61,23 @@ public class TerminalInterface {
                     System.out.println("Bad input.\n");
                 }
             }
-            int errorCode = store.buyItem(selection, character, amount);
+            int errorCode = store.buyItem(selection, player, amount);
 
             switch (errorCode) {
                 case 0:
-                    System.out.println("You have just purchased " + amount + " " + stock[selection].getName() + "!");
+                    System.out.println("You have just purchased " + amount + " " + store.get(selection).getItem().getName() + "!");
                     break;
                 case 1:
-                    System.out.println("The store doesn't have that many " + stock[selection].getName() + " in stock!");
+                    System.out.println("The store doesn't have that many " + store.get(selection).getItem().getName() + " in stock!");
                     break;
                 case 2:
-                    System.out.println("You can't buy 0 " + stock[selection].getName());
+                    System.out.println("You can't buy 0 " + store.get(selection).getItem().getName());
                     break;
                 case 3:
-                    System.out.println("You don't have enough coins to pay for " + amount + " " + stock[selection].getName() + "!");
+                    System.out.println("You don't have enough coins to pay for " + amount + " " + store.get(selection).getItem().getName() + "!");
                     break;
                 case 4:
-                    System.out.println("You don't have enough inventory space for " + amount + " " + stock[selection].getName() + "!");
+                    System.out.println("You don't have enough inventory space for " + amount + " " + store.get(selection).getItem().getName() + "!");
                     break;
             }
 

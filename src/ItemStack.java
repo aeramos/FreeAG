@@ -16,45 +16,74 @@
  * along with FreeAG.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ItemStack {
-    private ItemType type;
-    private String name;
+    private Item item;
     private int amount;
 
-    public enum ItemType {
-        COIN(1), APPLE(10);
+    public enum Item {
+        COIN("Coin", ItemType.MONEY, 1), APPLE("Apple", ItemType.FOOD, 5), COPPER_ORE("Copper ore", ItemType.ORE, 10), TIN_ORE("Tin ore", ItemType.ORE, 10), BRONZE("Bronze ingot", ItemType.METAL, 100);
 
+        private final String name;
+        private final ItemType type;
         private final int value;
 
-        ItemType(int value) {
+        Item(String name, ItemType type, int value) {
+            this.name = name;
+            this.type = type;
             this.value = value;
+        }
+
+        public String getName() {
+            return name;
         }
 
         public int getValue() {
             return value;
         }
+
+        public ItemType getType() {
+            return type;
+        }
     }
 
-    public ItemStack(ItemType type, String name, int amount) {
-        this.type = type;
-        this.name = name;
+    public enum ItemType {
+        MONEY, FOOD, ORE, METAL
+    }
+
+    public ItemStack(Item item, int amount) {
+        this.item = item;
         this.amount = amount;
     }
 
-    public ItemType getType() {
-        return type;
+    public static ItemStack[] combine(ItemStack[] stack1, ItemStack... stack2) {
+        ArrayList<ItemStack> result = new ArrayList<ItemStack>(Arrays.asList(stack1));
+        for (int i = 0; i < stack2.length; i++) {
+            Item type = stack2[i].getItem();
+
+            boolean added = false;
+            for (int j = 0; j < result.size(); j++) {
+                if (type == result.get(i).getItem()) {
+                    result.get(i).changeAmount(stack2[i].getAmount());
+                    added = true;
+                    break;
+                }
+            }
+            if (!added) {
+                result.add(stack2[i]);
+            }
+        }
+        return result.toArray(new ItemStack[0]);
     }
 
-    public void setType(ItemType type) {
-        this.type = type;
+    public Item getItem() {
+        return item;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public int getAmount() {
@@ -65,10 +94,10 @@ public class ItemStack {
         this.amount += amount;
     }
 
-    public ItemStack getItems(int amount) {
+    public ItemStack removeItems(int amount) {
         if (this.amount >= amount) {
             this.amount -= amount;
-            return new ItemStack(this.type, this.name, amount);
+            return new ItemStack(this.item, amount);
         } else {
             return null;
         }

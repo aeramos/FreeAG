@@ -16,16 +16,16 @@
  * along with FreeAG.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Store {
     private String name;
-    private ArrayList<ItemStack> itemStacks;
+    private Inventory inventory;
 
     public Store(String name, ItemStack[] itemStacks) {
         this.name = name;
-        this.itemStacks = new ArrayList<ItemStack>(Arrays.asList(itemStacks));
+        this.inventory = new Inventory(0);
+        for (ItemStack itemStack : itemStacks) {
+            inventory.add(itemStack);
+        }
     }
 
     public String getName() {
@@ -36,28 +36,28 @@ public class Store {
         this.name = name;
     }
 
-    public ItemStack[] getItemStacks() {
-        return itemStacks.toArray(new ItemStack[0]);
+    public void add(ItemStack itemStack) {
+        inventory.add(itemStack);
     }
 
-    public void addItemStack(ItemStack itemStack) {
-        itemStacks.add(itemStack);
+    public ItemStack get(int i) {
+        return inventory.get(i);
     }
 
-    public void removeItemStack(int i) {
-        itemStacks.remove(i);
+    public ItemStack remove(int i) {
+        return inventory.remove(i);
     }
 
-    public int buyItem(int i, Character character, int amount) {
-        if (itemStacks.get(i).getAmount() >= amount) {
+    public int buyItem(int i, Player player, int amount) {
+        if (inventory.get(i).getAmount() >= amount) {
             if (amount > 0) {
-                ItemStack characterMoney = character.getItem(ItemStack.ItemType.COIN);
-                if (characterMoney != null && characterMoney.getAmount() >= itemStacks.get(i).getType().getValue() * amount) {
-                    if (character.addItem(itemStacks.get(i).getItems(amount))) {
-                        character.getItem(ItemStack.ItemType.COIN).changeAmount(itemStacks.get(i).getType().getValue() * -amount);
+                ItemStack characterMoney = player.getInventory().get(ItemStack.Item.COIN);
+                if (characterMoney != null && characterMoney.getAmount() >= inventory.get(i).getItem().getValue() * amount) {
+                    if (player.getInventory().add(inventory.get(i).removeItems(amount))) {
+                        player.getInventory().get(ItemStack.Item.COIN).changeAmount(inventory.get(i).getItem().getValue() * -amount);
                         return 0;
                     } else {
-                        itemStacks.get(i).changeAmount(amount);
+                        inventory.get(i).changeAmount(amount);
                         return 4; // out of inventory
                     }
                 }
@@ -66,5 +66,9 @@ public class Store {
             return 2;
         }
         return 1; // out of stock
+    }
+
+    public int size() {
+        return inventory.size();
     }
 }

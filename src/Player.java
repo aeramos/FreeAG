@@ -16,24 +16,20 @@
  * along with FreeAG.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class Character {
+public class Player {
     private String name;
-    private ArrayList<ItemStack> inventory;
-    private int inventorySize = 32;
+    private Inventory inventory;
     private int level;
     private int xp;
     private int maxXP;
     private int health;
     private int maxHealth;
 
-    public Character(String name, int level, int xp, ItemStack[] inventory) {
+    public Player(String name, int level, int xp, ItemStack[] inventory) {
         this.name = name;
         this.level = level;
         this.xp = xp;
-        this.inventory = new ArrayList<ItemStack>(Arrays.asList(inventory));
+        this.inventory = new Inventory(32, inventory);
         refreshLevel();
     }
 
@@ -74,38 +70,6 @@ public class Character {
         this.health = health;
     }
 
-    public ItemStack getItem(int i) {
-        return inventory.get(i);
-    }
-
-    public ItemStack getItem(ItemStack.ItemType type) {
-        for (ItemStack itemStack : inventory) {
-            if (itemStack.getType() == type) {
-                return itemStack;
-            }
-        }
-        return null;
-    }
-
-    public boolean addItem(ItemStack itemStack) {
-        for (ItemStack stack : inventory) {
-            if (stack.getType() == itemStack.getType()) {
-                stack.changeAmount(itemStack.getAmount());
-                return true;
-            }
-        }
-        if (inventory.size() < inventorySize) {
-            inventory.add(itemStack);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public ItemStack removeItem(int i) {
-        return inventory.remove(i);
-    }
-
     private int refreshLevel() {
         maxHealth = level * 100;
         maxXP = level * 10;
@@ -115,5 +79,9 @@ public class Character {
             refreshLevel();
         }
         return level;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }
