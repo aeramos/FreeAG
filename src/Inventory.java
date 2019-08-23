@@ -47,7 +47,7 @@ public class Inventory {
     }
 
     public ItemStack[] get(ItemStack.ItemType type) {
-        ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> items = new ArrayList<>();
         for (ItemStack itemStack : itemStacks) {
             if (itemStack.getItem().getType() == type) {
                 items.add(itemStack);

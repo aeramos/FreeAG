@@ -59,7 +59,7 @@ public class ItemStack {
     }
 
     public static ItemStack[] combine(ItemStack[] stack1, ItemStack... stack2) {
-        ArrayList<ItemStack> result = new ArrayList<ItemStack>(Arrays.asList(stack1));
+        ArrayList<ItemStack> result = new ArrayList<>(Arrays.asList(stack1));
         for (int i = 0; i < stack2.length; i++) {
             Item type = stack2[i].getItem();
 

@@ -21,7 +21,6 @@ import java.util.Scanner;
 public class TerminalInterface {
     public static void store(Store store, Player player) {
         Scanner scanner = new Scanner(System.in);
-        String input;
         boolean badInput;
         boolean shopping = true;
 
@@ -36,9 +35,8 @@ public class TerminalInterface {
                 }
 
                 System.out.println("What would you like to buy?");
-                input = scanner.nextLine();
                 try {
-                    selection = Integer.parseInt(input) - 1;
+                    selection = Integer.parseInt(scanner.nextLine()) - 1;
                 } catch (NumberFormatException ignored) {
                 }
 
@@ -53,9 +51,8 @@ public class TerminalInterface {
             int amount = -1;
             while (badInput) {
                 System.out.println("How many " + store.get(selection).getItem().getName() + " would you like? We have " + store.get(selection).getAmount() + " in stock.");
-                input = scanner.nextLine();
                 try {
-                    amount = Integer.parseInt(input);
+                    amount = Integer.parseInt(scanner.nextLine());
                     badInput = false;
                 } catch (NumberFormatException e) {
                     System.out.println("Bad input.\n");
@@ -84,7 +81,7 @@ public class TerminalInterface {
             badInput = true;
             while (badInput) {
                 System.out.println("Would you like to buy something else? (y/n)");
-                input = scanner.nextLine();
+                String input = scanner.nextLine();
                 if (input.equals("y")) {
                     badInput = false;
                 } else if (input.equals("n")) {
